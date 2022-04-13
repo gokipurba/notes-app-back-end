@@ -1,4 +1,4 @@
-const ClientError = require("../../exceptions/clienterror");
+const ClientError = require("../../exceptions/ClientError");
 
 class NotesHandler {
     constructor(service, validator) {

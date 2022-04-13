@@ -74,7 +74,7 @@ class NotesHandler {
                     status: 'fail',
                     message: error.message,
                 });
-                response.cede(error.statusCode);
+                response.code(error.statusCode);
                 return response;
             }
 

@@ -2,3 +2,5 @@ node_modules
 notes-api-server.pem
 postman-testing-automation
 vscode
+.env
+.prod.env

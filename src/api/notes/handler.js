@@ -17,8 +17,6 @@ class NotesHandler {
 
         const { title = 'untitled', body, tags } = request.payload;
         const { id: credentialId } = request.auth.credentials;
-        console.log(credentialId);
-
         const noteId = await this._service.addNote({title, body, tags, owner: credentialId});
 
         const response = h.response({
@@ -67,7 +65,7 @@ class NotesHandler {
             const { id } = request.params;
             const { id: credentialId } = request.auth.credentials;
 
-            await this._service.verifyNoteOwner(id, credentialId);
+            await this._service.verifyNoteAccess(id, credentialId);
             const note = await this._service.getNoteById(id);
             return {
                 status: 'success',
@@ -101,7 +99,7 @@ class NotesHandler {
             this._validator.validateNotePayload(request.payload);
             const { id } = request.params;
             const { id : credentialId } = request.auth.credentials;
-            await this._service.verifyNoteOwner(id, credentialId);
+            await this._service.verifyNoteAccess(id, credentialId);
             await this._service.editNoteById(id, request.payload);
 
             return {
@@ -111,21 +109,21 @@ class NotesHandler {
         } catch (error) {
             if (error instanceof ClientError) {
                 const response = h.response({
-                  status: 'fail',
-                  message: error.message,
+                status: 'fail',
+                message: error.message,
                 });
                 response.code(error.statusCode);
                 return response;
-              }
-         
+            }
               // Server ERROR!
-              const response = h.response({
+            const response = h.response({
                 status: 'error',
                 message: 'Maaf, terjadi kegagalan pada server kami.',
-              });
-              response.code(500);
-              console.error(error);
-              return response;
+            });
+            response.code(500);
+            console.error(error);
+            return response;
+        
         }
     }
 

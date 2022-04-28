@@ -4,3 +4,4 @@ postman-testing-automation
 vscode
 .env
 .prod.env
+src/api/uploads/file
